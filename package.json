@@ -2,13 +2,17 @@
   "name": "aviasales",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://Safar1997.github.io/aviasales",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.2",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "styled-components": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,6 +42,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "babel-plugin-styled-components": "^1.10.7",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.1",
@@ -46,8 +51,11 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "eslint-plugin-vue": "^6.2.2",
+    "gh-pages": "^2.2.0",
     "husky": "^4.2.3",
-    "prettier": "2.0.2"
+    "prettier": "2.0.2",
+    "typescript": "^3.8.3",
+    "typescript-styled-plugin": "^0.15.0"
   },
   "husky": {
     "hooks": {
