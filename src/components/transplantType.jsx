@@ -1,51 +1,60 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/prop-types */
 import React from 'react';
-import LeftComp from '../style/form/leftForm';
 import {
   Checkbox, StyledLabel, HeaderWrapper, Header,
 } from '../style/form/checkBox';
-import Ticket from './tickets';
+import LeftComp from '../style/form/leftComponent';
 
-
-export default class LeftComponent extends React.Component {
+export default class TransplantType extends React.Component {
   constructor() {
     super();
     this.state = {
       all: false,
       without: false,
-      oneTrans: false,
-      twoTrans: false,
-      threeTrans: false,
+      one: false,
+      two: false,
+      three: false,
     };
   }
 
   // события для чекбоксов
   checked = (_id) => () => {
+    const { updateTransplantType } = this.props;
     switch (_id) {
       case 1:
         this.setState((state) => ({
           all: !state.all,
-        }));
+        }), () => {
+          updateTransplantType(this.state);
+        });
         break;
       case 2:
         this.setState((state) => ({
           without: !state.without,
-        }));
+        }), () => {
+          updateTransplantType(this.state);
+        });
         break;
       case 3:
         this.setState((state) => ({
-          oneTrans: !state.oneTrans,
-        }));
+          one: !state.one,
+        }), () => {
+          updateTransplantType(this.state);
+        });
         break;
       case 4:
         this.setState((state) => ({
-          twoTrans: !state.twoTrans,
-        }));
+          two: !state.two,
+        }), () => {
+          updateTransplantType(this.state);
+        });
         break;
       case 5:
         this.setState((state) => ({
-          threeTrans: !state.threeTrans,
-        }));
+          three: !state.three,
+        }), () => {
+          updateTransplantType(this.state);
+        });
         break;
       default:
         break;
@@ -54,7 +63,7 @@ export default class LeftComponent extends React.Component {
 
   render() {
     const {
-      all, without, oneTrans, twoTrans, threeTrans,
+      all, without, one, two, three,
     } = this.state;
     return (
       <>
@@ -78,30 +87,26 @@ export default class LeftComponent extends React.Component {
           </StyledLabel>
           <StyledLabel>
             <Checkbox
-              checked={oneTrans}
+              checked={one}
               onChange={this.checked(3)}
             />
             <span style={{ marginLeft: 10 }}>1 пересадка</span>
           </StyledLabel>
           <StyledLabel>
             <Checkbox
-              checked={twoTrans}
+              checked={two}
               onChange={this.checked(4)}
             />
             <span style={{ marginLeft: 10 }}>2 пересадки</span>
           </StyledLabel>
           <StyledLabel>
             <Checkbox
-              checked={threeTrans}
+              checked={three}
               onChange={this.checked(5)}
             />
             <span style={{ marginLeft: 10 }}>3 пересадки</span>
           </StyledLabel>
         </LeftComp>
-        <Ticket condition={{
-          all, without, oneTrans, twoTrans, threeTrans,
-        }}
-        />
       </>
     );
   }

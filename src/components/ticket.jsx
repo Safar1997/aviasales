@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prefer-stateless-function */
@@ -5,9 +6,10 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import Service from '../service/service';
 import {
-  TopSelector, BtnSelector, TicketWrapper, MainTicket,
+  MainTicket,
   TicketColumn, SpanSells, SpanSellsWrapper, TopCells,
 } from '../style/form/checkBox';
+
 
 export default class Ticket extends React.Component {
   service = new Service();
@@ -16,75 +18,12 @@ export default class Ticket extends React.Component {
     super();
     this.state = {
       packOfTickets: [],
-      // eslint-disable-next-line react/no-unused-state
-      ticketsMainInfo: [],
-      // displayingTicket: [],
-      // cheap: false,
-      fast: false,
     };
   }
 
   componentDidMount() {
     this.service.getResourseId()
       .then((pack) => this.setState({ packOfTickets: [...pack] }));
-  }
-
-  destructData = (packOfTickets) => (
-    packOfTickets.reduce((acc, el) => {
-      if (el !== undefined) {
-        acc.push(el.data);
-      }
-      return acc;
-    }, [])
-  )
-
-  destructTickets = () => {
-    const { packOfTickets } = this.state;
-    const data = this.destructData(packOfTickets);
-    return (
-      data.reduce((acc, el) => {
-        acc.push(el.tickets);
-        return acc;
-      }, [])
-    );
-  }
-
-  deepDestruct = () => {
-    const mass = this.destructTickets();
-    return (
-      mass.reduce((acc, el) => {
-        el.forEach((element) => {
-          acc.push(element);
-        });
-        return acc;
-      }, [])
-    );
-  }
-
-  structuringTicket = (ticketsArr) => (
-    ticketsArr.reduce((acc, el, id) => {
-      acc.push({
-        id,
-        price: el.price,
-        duration: (el.segments[0].duration + el.segments[1].duration),
-        transplant: el.segments[0].stops.length,
-      });
-      return acc;
-    }, [])
-  )
-
-  displayingTicket = (listId, ticketsData) => {
-    const tickets = [];
-    listId.forEach((el) => tickets.push(ticketsData[el]));
-    return tickets;
-  }
-
-  btnSelect = (id) => () => {
-    if (id === 'cheap') {
-      this.setState({ fast: false });
-    } else {
-      this.setState({ fast: true });
-    }
   }
 
   getFlyInfo = (data) => {
@@ -152,11 +91,11 @@ export default class Ticket extends React.Component {
   }
 
   topBtnLogic = (initialArr) => {
-    const { fast } = this.state;
+    const { sortType: { fast } } = this.props;
     let arr;
     if (initialArr.length > 0 && fast) {
       arr = initialArr.slice()
-        .sort((tik1, tik2) => (tik1.duration > tik2.duration ? 1 : -1));
+        .sort((tik1, tik2) => (tik1.segments[0].duration > tik2.segments[0].duration ? 1 : -1));
       return arr;
     }
     arr = initialArr.slice().sort((tik1, tik2) => (tik1.price > tik2.price ? 1 : -1));
@@ -164,48 +103,29 @@ export default class Ticket extends React.Component {
   }
 
   render() {
-    const { condition } = this.props;
+    const { transplantType } = this.props;
+    const { packOfTickets } = this.state;
 
-    const aaa = this.deepDestruct();
 
-    if (aaa.length === 0) {
-      return null;
-    }
+    let show = this.topBtnLogic(packOfTickets);
 
-    const structuredTicket = this.structuringTicket(aaa);
-
-    // Логика отображения
-    const qqq = this.topBtnLogic(structuredTicket);
-    const ids = [];
-
-    if (qqq.length > 0) {
-      for (let i = 0; i < qqq.length; i += 1) {
-        ids.push(qqq[i].id); // id билетов, которые надо отобразить
-      }
-    }
-
-    let show = this.displayingTicket(ids, aaa); // id, билеты берем у изначального списка билетов
-    // all, without, oneTrans, twoTrans, threeTrans
     const {
-      all, without, oneTrans, twoTrans, threeTrans,
-    } = condition;
+      all, without, one, two, three,
+    } = transplantType;
     if (!all && (show.length > 0)) {
       show = show.filter((el) => (without ? (el.segments[0].stops.length === 0) : null)
-          || (oneTrans ? (el.segments[0].stops.length === 1) : null)
-            || (twoTrans ? (el.segments[0].stops.length === 2) : null)
-              || (threeTrans ? (el.segments[0].stops.length === 3) : null));
+          || (one ? (el.segments[0].stops.length === 1) : null)
+            || (two ? (el.segments[0].stops.length === 2) : null)
+              || (three ? (el.segments[0].stops.length === 3) : null));
+    }
+    if (show.length === 0) {
+      show = this.topBtnLogic(packOfTickets);
     }
     show = show.filter((el, id) => id < 5);
-
     return (
-      <TicketWrapper>
-        <TopSelector>
-          <BtnSelector onClick={this.btnSelect('cheap')}>Самый дешевый</BtnSelector>
-          <BtnSelector onClick={this.btnSelect('fast')}>Самый быстрый</BtnSelector>
-        </TopSelector>
-        {show.map((el, id) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <MainTicket key={id}>
+      <>
+        {show.map((el) => (
+          <MainTicket key={show.id}>
             <TicketColumn>
               <SpanSellsWrapper>
                 <SpanSells style={{ color: '#A0B0B9' }}>{this.getFlyInfo(el)[0]}</SpanSells>
@@ -270,24 +190,14 @@ export default class Ticket extends React.Component {
             </TicketColumn>
           </MainTicket>
         ))}
-      </TicketWrapper>
+      </>
     );
   }
 }
 
 Ticket.defaultProps = {
-  all: false,
-  without: false,
-  oneTrans: false,
-  twoTrans: false,
-  threeTrans: false,
-  condition: {},
+  transplantType: {},
 };
 Ticket.propTypes = {
-  condition: PropTypes.object,
-  all: PropTypes.bool,
-  without: PropTypes.bool,
-  oneTrans: PropTypes.bool,
-  twoTrans: PropTypes.bool,
-  threeTrans: PropTypes.bool,
+  transplantType: PropTypes.object,
 };

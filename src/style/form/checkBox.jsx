@@ -82,7 +82,6 @@ export const Header = styled.h1`
 
 // top-selector
 export const TopSelector = styled.div`
-  margin-top: 160px;
   box-sizing: border-box;
   width: 508px;
   height: 50px;
@@ -116,7 +115,8 @@ export const BtnSelector = styled.button`
 // TicketWrapper
 
 export const TicketWrapper = styled.div`
-  padding-left: 20px;
+  /* padding-left: 20px; */
+  width: 502px;
 `;
 
 // Ticket
@@ -164,5 +164,8 @@ export const TopCells = styled.h1`
 `;
 
 export const CompaniImage = styled.img`
-
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
 `;

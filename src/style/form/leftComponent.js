@@ -10,10 +10,11 @@ export default styled.form`
   font-weight: normal;
   font-size: 13px;
   line-height: 20px;
-  margin-top: 160px;
-  margin-left: 103px;
   padding-top: 20px;
   padding-bottom: 10px;
   border: 1px solid transparent;
   box-sizing: border-box;
+  margin-top: 60px;
+  margin-right: 20px;
+  margin-left: 30px;
 `;
