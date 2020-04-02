@@ -6,7 +6,7 @@ export default class Service {
 
   onError = (err) => {
     console.log(`WTF${err}`);
-    // alert('Сори, джаст э литтл проблем');
+    alert('Сори, джаст э литтл проблем');
   }
 
   async getResourseId() {
