@@ -6,7 +6,8 @@ export default class Service {
 
   onError = (err) => {
     console.log(`WTF${err}`);
-    alert('Сори, джаст э литтл проблем');
+    alert(`Сервер иногда спецом ощибку отправляет,
+    чтобы застать нас в расплох, но мы-то готовы, если нет билетов, просто перезагрузи :)`);
   }
 
   async getResourseId() {
@@ -23,6 +24,17 @@ export default class Service {
       ticketPack = await axios.get(`${ticketsUrl}`).catch(this.onError);
       arrTicketsPacket.push(ticketPack);
     }
+    // WARNING
+    // const pushingPackage = async (ticketPackage, isStop) => {
+    //   if (ticketPackage.length > 0 && isStop) {
+    //     return;
+    //   }
+    //   ticketPack = await axios.get(`${ticketsUrl}`).catch(this.onError);
+    //   arrTicketsPacket.push(ticketPack);
+    //   pushingPackage(ticketPack, ticketPack.data.stop);
+    // };
+    // pushingPackage(ticketPack, ticketPack.data.stop);
+    // END OF WARNING
     if (arrTicketsPacket[arrTicketsPacket.length - 1] === undefined) {
       arrTicketsPacket.pop();
     }

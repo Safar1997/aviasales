@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Checkbox, StyledLabel, HeaderWrapper, Header,
 } from '../style/form/checkBox';
-import LeftComp from '../style/form/leftComponent';
+import LeftComp from '../style/form/checkBoxStyle';
 
 export default class TransplantType extends React.Component {
   constructor() {

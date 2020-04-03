@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import './fonts.css';
 
 export default styled.form`
   background-color: #FFFFFF;
@@ -6,6 +7,7 @@ export default styled.form`
   border-radius: 5px;
   width: 232px;
   height: 252px;
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: normal;
   font-size: 13px;

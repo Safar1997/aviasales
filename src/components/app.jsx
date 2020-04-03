@@ -1,13 +1,13 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
+import '../style/form/fonts.css';
 import styled from 'styled-components';
-import GlobalFonts from '../style/form/injection';
 import SortType from './sortType';
 import TransplantType from './transplantType';
 import Ticket from './ticket';
 import { TicketWrapper, CompaniImage } from '../style/form/checkBox';
-import logo from './logo.svg';
+import logo from './logo/logo.svg';
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,7 +48,6 @@ export default class App extends React.Component {
     const { transplantType, sortType } = this.state;
     return (
       <Wrapper>
-        <GlobalFonts />
         <TransplantType updateTransplantType={this.updateTransplantType} />
         <TicketWrapper>
           <CompaniImage src={logo} />
